@@ -9,6 +9,7 @@ use Andante\SoftDeletableBundle\Doctrine\DBAL\Type\DeletedAtType;
 use Andante\SoftDeletableBundle\SoftDeletableInterface;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
+use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Events;
 
 class SoftDeletableEventSubscriber implements EventSubscriber
@@ -23,9 +24,27 @@ class SoftDeletableEventSubscriber implements EventSubscriber
     public function getSubscribedEvents(): array
     {
         return [
-            //Events::onFlush,
+            Events::onFlush,
             Events::loadClassMetadata,
         ];
+    }
+
+    public function onFlush(OnFlushEventArgs $onFlushEventArgs): void
+    {
+        $entityManager = $onFlushEventArgs->getEntityManager();
+        $unitOfWork = $entityManager->getUnitOfWork();
+        foreach ($unitOfWork->getScheduledEntityDeletions() as $entity) {
+            if (! $entity instanceof SoftDeletableInterface) {
+                continue;
+            }
+            $oldValue = $entity->getDeletedAt();
+            $entity->markDeleted();
+            $entityManager->persist($entity);
+            $unitOfWork->propertyChanged($entity, $this->deletedAtPropertyName, $oldValue, $entity->getDeletedAt());
+            $unitOfWork->scheduleExtraUpdate($entity, [
+                $this->deletedAtPropertyName => [$oldValue, $entity->getDeletedAt()],
+            ]);
+        }
     }
 
     public function loadClassMetadata(LoadClassMetadataEventArgs $loadClassMetadataEventArgs): void

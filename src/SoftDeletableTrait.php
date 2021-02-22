@@ -20,9 +20,9 @@ trait SoftDeletableTrait
         return $this->deletedAt;
     }
 
-    public function setDeletedAt(?\DateTimeImmutable $deletedAt): self
+    public function markDeleted(\DateTimeImmutable $deletedAt = null): self
     {
-        $this->deletedAt = $deletedAt;
+        $this->deletedAt = $deletedAt ?? new \DateTimeImmutable();
         return $this;
     }
 
