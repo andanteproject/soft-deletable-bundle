@@ -1,0 +1,64 @@
+{
+    "name": "andanteproject/soft-deletable-bundle",
+    "description": "A Symfony Bundle to handle soft deletable with Doctrine Entities",
+    "keywords": [
+        "symfony",
+        "symfony-bundle",
+        "doctrine",
+        "doctrine-orm",
+        "soft-delete",
+        "php",
+        "php7",
+        "php74"
+    ],
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andante Project",
+            "homepage": "https://github.com/andanteproject"
+        },
+        {
+            "name": "Cristoforo Cervino",
+            "homepage": "https://github.com/StevioStudio"
+        },
+        {
+            "name": "Luca Cividini",
+            "homepage": "https://github.com/lcvd"
+        }
+    ],
+    "require": {
+        "php": "^7.4 || ^8.0",
+        "symfony/framework-bundle": "^4.4 | ^5.0",
+        "doctrine/common": "^2.13 || ^3.0",
+        "doctrine/event-manager": "^1.0"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-master",
+        "doctrine/orm": "^2.6.3",
+        "phpunit/phpunit": "^9.5",
+        "doctrine/doctrine-bundle": "^2.2",
+        "symfony/yaml": "^5.2",
+        "friendsofphp/php-cs-fixer": "^2.18",
+        "phpstan/phpstan": "^0.12.78",
+        "phpstan/phpstan-phpunit": "^0.12.17",
+        "phpstan/extension-installer": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Andante\\SoftDeletableBundle\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Andante\\SoftDeletableBundle\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "phpstan": "phpstan analyse src tests",
+        "phpunit-base": "phpunit tests/",
+        "phpunit": "@phpunit-base --testdox",
+        "cs-check": "mkdir -p var/cache && php-cs-fixer fix --dry-run --diff --cache-file=var/cache/.php_cs.cache --config=.php_cs.dist",
+        "cs-fix": "mkdir -p var/cache && php-cs-fixer fix --diff --cache-file=var/cache/.php_cs.cache --config=.php_cs.dist"
+    }
+}

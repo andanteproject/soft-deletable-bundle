@@ -1,0 +1,26 @@
+parameters:
+  env(DATABASE_URL): "sqlite:///%kernel.project_dir%/var/test_database.db"
+  kernel.secret: "secret"
+  locale: "en"
+
+services:
+  _defaults:
+    public: true
+    autowire: true
+
+  Symfony\Component\Security\Core\Security: null
+
+doctrine:
+  dbal:
+    url: "%env(DATABASE_URL)%"
+
+  # creates Doctrine\ORM\EntityManager services
+  orm:
+    naming_strategy: doctrine.orm.naming_strategy.underscore
+    auto_mapping: true
+    mappings:
+      fixtures:
+        type: annotation
+        prefix: 'Andante\SoftDeletableBundle\Tests\Fixtures\Entity'
+        dir: '%kernel.project_dir%/tests/Fixtures/Entity/'
+        is_bundle: false

@@ -1,0 +1,2 @@
+andante_soft_deletable:
+  delete_at_property_name: deletedAt
