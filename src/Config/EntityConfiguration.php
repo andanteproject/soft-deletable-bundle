@@ -11,7 +11,7 @@ class EntityConfiguration
     private string $propertyName = self::DEFAULT_DELETED_AT_PROPERTY_NAME;
     private ?string $columnName = null;
     private bool $tableIndex = true;
-    private bool $alwaysUpdateDeleteAt = true;
+    private bool $alwaysUpdateDeleteAt = false;
 
     public function getPropertyName(): string
     {
@@ -75,8 +75,8 @@ class EntityConfiguration
         } elseif (null !== $fallbackConfig) {
             $entityConfiguration->setTableIndex($fallbackConfig->isTableIndex());
         }
-        if (\array_key_exists('always_update_delete_at', $config)) {
-            $entityConfiguration->setAlwaysUpdateDeleteAt($config['always_update_delete_at']);
+        if (\array_key_exists('always_update_deleted_at', $config)) {
+            $entityConfiguration->setAlwaysUpdateDeleteAt($config['always_update_deleted_at']);
         } elseif (null !== $fallbackConfig) {
             $entityConfiguration->setAlwaysUpdateDeleteAt($fallbackConfig->isAlwaysUpdateDeleteAt());
         }

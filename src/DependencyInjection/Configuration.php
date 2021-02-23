@@ -41,7 +41,7 @@ class Configuration implements ConfigurationInterface
                             ->info('If TRUE, adds a table index to the deletedAt property')
                         ->end()
                         ->scalarNode('always_update_deleted_at')
-                            ->defaultTrue()
+                            ->defaultFalse()
                             ->info('If true, deletedAt property will be always updated on delete, even if there is already a "deletedAt" date')
                         ->end()
                     ->end()

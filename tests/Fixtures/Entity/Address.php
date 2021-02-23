@@ -11,10 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity()
  */
-class Organization implements SoftDeletableInterface
+class Address implements SoftDeletableInterface
 {
-    use SoftDeletableTrait;
-
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -27,9 +25,21 @@ class Organization implements SoftDeletableInterface
      */
     private ?string $name  = null;
 
+    private ?\DateTimeImmutable $deleted = null;
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getDeletedAt(): ?\DateTimeImmutable
+    {
+        return $this->deleted;
+    }
+
+    public function setDeletedAt(\DateTimeImmutable $deletedAt = null): void
+    {
+        $this->deleted = $deletedAt ?? new \DateTimeImmutable();
     }
 
     public function getName(): ?string

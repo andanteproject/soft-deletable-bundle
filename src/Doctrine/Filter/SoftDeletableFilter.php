@@ -79,7 +79,7 @@ class SoftDeletableFilter extends SQLFilter
                     $platform->getCurrentTimestampSQL()
                 );
             }
-            return sprintf("(%s)", $expression);
+            return $expression;
         }
         return '';
     }

@@ -39,8 +39,8 @@ class SoftDeletableEventSubscriber implements EventSubscriber
                 continue;
             }
             $oldValue = $entity->getDeletedAt();
-            if ($oldValue !== null && $this->configuration->isAlwaysUpdateDeleteAtForClass(get_class($entity))) {
-                $entity->setDeletedAt();
+            if ($oldValue === null || $this->configuration->isAlwaysUpdateDeleteAtForClass(get_class($entity))) {
+                $entity->setDeletedAt(new \DateTimeImmutable());
             }
             $newValue = $entity->getDeletedAt();
             $entityManager->persist($entity);

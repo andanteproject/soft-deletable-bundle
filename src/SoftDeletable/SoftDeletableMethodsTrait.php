@@ -16,6 +16,6 @@ trait SoftDeletableMethodsTrait
 
     public function setDeletedAt(\DateTimeImmutable $deletedAt = null): void
     {
-        $this->deletedAt = $deletedAt ?? new \DateTimeImmutable();
+        $this->deletedAt = $deletedAt;
     }
 }

@@ -4,3 +4,8 @@ andante_soft_deletable:
   entity:
     Andante\SoftDeletableBundle\Tests\Fixtures\Entity\Organization:
       property_name: deletedAt
+    Andante\SoftDeletableBundle\Tests\Fixtures\Entity\Address:
+      property_name: deleted
+      column_name: delete_date
+      table_index: false
+      always_update_deleted_at: true
