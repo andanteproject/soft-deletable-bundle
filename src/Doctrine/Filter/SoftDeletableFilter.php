@@ -23,8 +23,10 @@ class SoftDeletableFilter extends SQLFilter
     public function addFilterConstraint(ClassMetadata $targetEntity, $targetTableAlias): string
     {
         if ($targetEntity->getReflectionClass()->implementsInterface(SoftDeletableInterface::class)) {
-            if (array_key_exists($targetEntity->getName(), $this->disabled) && $this->disabled[$targetEntity->getName(
-                )] === true) {
+            if (
+                array_key_exists($targetEntity->getName(), $this->disabled) &&
+                $this->disabled[$targetEntity->getName()] === true
+            ) {
                 return '';
             }
 
@@ -68,9 +70,18 @@ class SoftDeletableFilter extends SQLFilter
             $platform = $conn->getDatabasePlatform();
             $column = $targetEntity->getQuotedColumnName($softDeletableFiledName, $platform);
 
-            return $platform->getIsNullExpression(sprintf("%s.%s", $targetTableAlias, $column));
+            $expression = $platform->getIsNullExpression(sprintf("%s.%s", $targetTableAlias, $column));
+            if ($this->hasParameter('deleted_date_aware') && $this->getParameter('deleted_date_aware')) {
+                $expression .= \sprintf(
+                    ' OR %s.%s >= %s',
+                    $targetTableAlias,
+                    $column,
+                    $platform->getCurrentTimestampSQL()
+                );
+            }
+            return sprintf("(%s)", $expression);
         }
-        return "";
+        return '';
     }
 
     protected function getEntityManager(): EntityManagerInterface

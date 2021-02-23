@@ -28,6 +28,9 @@ class AndanteSoftDeletableExtension extends Extension implements PrependExtensio
 
     public function prepend(ContainerBuilder $container): void
     {
+        $configs = $container->getExtensionConfig($this->getAlias());
+        $config = $this->processConfiguration(new BundleConfiguration(), $configs);
+
         $container->prependExtensionConfig('doctrine', [
             'dbal' => [
                 'types' => [
@@ -39,6 +42,9 @@ class AndanteSoftDeletableExtension extends Extension implements PrependExtensio
                     SoftDeletableFilter::NAME => [
                         'class' => SoftDeletableFilter::class,
                         'enabled' => true,
+                        'parameters' => [
+                            'deleted_date_aware' => $config['deleted_date_aware']
+                        ]
                     ],
                 ],
             ],
