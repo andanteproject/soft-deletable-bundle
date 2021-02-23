@@ -42,7 +42,8 @@
         "friendsofphp/php-cs-fixer": "^2.18",
         "phpstan/phpstan": "^0.12.78",
         "phpstan/phpstan-phpunit": "^0.12.17",
-        "phpstan/extension-installer": "^1.1"
+        "phpstan/extension-installer": "^1.1",
+        "phpstan/phpstan-symfony": "^0.12.20"
     },
     "autoload": {
         "psr-4": {

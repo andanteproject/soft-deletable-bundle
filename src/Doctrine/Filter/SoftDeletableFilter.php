@@ -6,7 +6,7 @@ namespace Andante\SoftDeletableBundle\Doctrine\Filter;
 
 use Andante\SoftDeletableBundle\Doctrine\DBAL\Type\DeletedAtType;
 use Andante\SoftDeletableBundle\Exception\MappingException;
-use Andante\SoftDeletableBundle\SoftDeletableInterface;
+use Andante\SoftDeletableBundle\SoftDeletable\SoftDeletableInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Query\Filter\SQLFilter;

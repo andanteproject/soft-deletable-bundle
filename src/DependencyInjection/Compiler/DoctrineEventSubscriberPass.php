@@ -8,6 +8,7 @@ use Andante\SoftDeletableBundle\DependencyInjection\AndanteSoftDeletableExtensio
 use Andante\SoftDeletableBundle\EventSubscriber\SoftDeletableEventSubscriber;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Reference;
 
 class DoctrineEventSubscriberPass implements CompilerPassInterface
 {
@@ -20,7 +21,7 @@ class DoctrineEventSubscriberPass implements CompilerPassInterface
                 self::SOFT_DELETABLE_SUBSCRIBER_SERVICE_ID,
                 SoftDeletableEventSubscriber::class
             )
-            ->addArgument(sprintf("%%%s%%", AndanteSoftDeletableExtension::PARAM_DELETE_AT_PROPERTY_NAME))
+            ->addArgument(new Reference('andante_soft_deletable.configuration'))
             ->addTag('doctrine.event_subscriber');
     }
 }

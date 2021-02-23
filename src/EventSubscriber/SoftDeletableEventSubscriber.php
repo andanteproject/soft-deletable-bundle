@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Andante\SoftDeletableBundle\EventSubscriber;
 
-use Andante\SoftDeletableBundle\DependencyInjection\Configuration;
+use Andante\SoftDeletableBundle\Config\Configuration;
 use Andante\SoftDeletableBundle\Doctrine\DBAL\Type\DeletedAtType;
-use Andante\SoftDeletableBundle\SoftDeletableInterface;
+use Andante\SoftDeletableBundle\SoftDeletable\SoftDeletableInterface;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Event\OnFlushEventArgs;
@@ -14,16 +14,12 @@ use Doctrine\ORM\Events;
 
 class SoftDeletableEventSubscriber implements EventSubscriber
 {
-    private string $deletedAtPropertyName;
+    private Configuration $configuration;
 
-    public function __construct(string $deletedAtPropertyName = Configuration::DEFAULT_DELETE_AT_PROPERTY_NAME)
+    public function __construct(Configuration $configuration)
     {
-        //TODO: allow different deleteAtPropertyName per Entity
-        //TODO: allow different column name for deleteAtPropertyName
-        //TODO: allow to choose if to add the table index or not (and how to configure that?)
         //TODO: allow to decide if, while querying, check if deletedAt date is in future beside if it's null
-        //TODO: allow to configure if an entity already deleted should be updated with a new deleted date
-        $this->deletedAtPropertyName = $deletedAtPropertyName;
+        $this->configuration = $configuration;
     }
 
     public function getSubscribedEvents(): array
@@ -43,11 +39,16 @@ class SoftDeletableEventSubscriber implements EventSubscriber
                 continue;
             }
             $oldValue = $entity->getDeletedAt();
-            $entity->markDeleted();
+            if ($oldValue !== null && $this->configuration->isAlwaysUpdateDeleteAtForClass(get_class($entity))) {
+                $entity->setDeletedAt();
+            }
+            $newValue = $entity->getDeletedAt();
             $entityManager->persist($entity);
-            $unitOfWork->propertyChanged($entity, $this->deletedAtPropertyName, $oldValue, $entity->getDeletedAt());
+
+            $deleteAtPropertyName = $this->configuration->getPropertyNameForClass(get_class($entity));
+            $unitOfWork->propertyChanged($entity, $deleteAtPropertyName, $oldValue, $newValue);
             $unitOfWork->scheduleExtraUpdate($entity, [
-                $this->deletedAtPropertyName => [$oldValue, $entity->getDeletedAt()],
+                $deleteAtPropertyName => [$oldValue, $newValue],
             ]);
         }
     }
@@ -62,24 +63,31 @@ class SoftDeletableEventSubscriber implements EventSubscriber
         if (! is_a($classMetadata->reflClass->getName(), SoftDeletableInterface::class, true)) {
             return;
         }
+        $className = $classMetadata->reflClass->getName();
 
-        if ($classMetadata->hasField($this->deletedAtPropertyName)) {
+        $deleteAtPropertyName = $this->configuration->getPropertyNameForClass($className);
+
+        if ($classMetadata->hasField($deleteAtPropertyName)) {
             return;
         }
 
         // Map field
         $classMetadata->mapField([
-            'fieldName' => $this->deletedAtPropertyName,
+            'fieldName' => $deleteAtPropertyName,
             'type' => DeletedAtType::NAME,
             'nullable' => true,
+            'columnName' => $this->configuration->getColumnNameForClass($className),
         ]);
-        // Add an index to table
-        if (! isset($classMetadata->table['indexes'])) {
-            $classMetadata->table['indexes'] = [];
+
+        if ($this->configuration->isTableIndexForClass($className)) {
+            // Add an index to table
+            if (! isset($classMetadata->table['indexes'])) {
+                $classMetadata->table['indexes'] = [];
+            }
+            $classMetadata->table['indexes'][] =
+                [
+                    'columns' => [$classMetadata->getColumnName($deleteAtPropertyName)],
+                ];
         }
-        $classMetadata->table['indexes'][] =
-            [
-                'columns' => [$classMetadata->getColumnName($this->deletedAtPropertyName)],
-            ];
     }
 }

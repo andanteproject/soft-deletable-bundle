@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Andante\SoftDeletableBundle\Tests\Fixtures\Entity;
 
-use Andante\SoftDeletableBundle\SoftDeletableInterface;
-use Andante\SoftDeletableBundle\SoftDeletableTrait;
+use Andante\SoftDeletableBundle\SoftDeletable\SoftDeletableInterface;
+use Andante\SoftDeletableBundle\SoftDeletable\SoftDeletableTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

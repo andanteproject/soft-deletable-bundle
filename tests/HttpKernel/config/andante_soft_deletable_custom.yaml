@@ -1,2 +1,6 @@
 andante_soft_deletable:
-  delete_at_property_name: deletedAt
+  default:
+    property_name: deletedAt
+  entity:
+    Andante\SoftDeletableBundle\Tests\Fixtures\Entity\Organization:
+      property_name: deletedAt
