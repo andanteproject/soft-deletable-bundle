@@ -1,0 +1,32 @@
+name: soft-deletable-bundle-CI
+on:
+  [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'  
+          #extensions: :opcache
+    
+      - name: check version
+        run: composer --version && php -v
+        
+      # Checks-out repository
+      - uses: actions/checkout@v2
+
+      - name: composer install
+        run: composer install
+
+      - name: cs-check
+        run: composer cs-check
+
+      - name: cs-fix
+        run: composer cs-fix
+
+      - name: phpstan
+        run: composer phpstan
+
+      - name: phpunit
+        run: composer phpunit

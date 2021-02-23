@@ -1,3 +1,4 @@
+.idea
 /var/cache/*
 /var/logs/*
 .phpunit.result.cache
