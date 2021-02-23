@@ -18,6 +18,11 @@ class SoftDeletableEventSubscriber implements EventSubscriber
 
     public function __construct(string $deletedAtPropertyName = Configuration::DEFAULT_DELETE_AT_PROPERTY_NAME)
     {
+        //TODO: allow different deleteAtPropertyName per Entity
+        //TODO: allow different column name for deleteAtPropertyName
+        //TODO: allow to choose if to add the table index or not (and how to configure that?)
+        //TODO: allow to decide if, while querying, check if deletedAt date is in future beside if it's null
+        //TODO: allow to configure if an entity already deleted should be updated with a new deleted date
         $this->deletedAtPropertyName = $deletedAtPropertyName;
     }
 
