@@ -2,7 +2,7 @@ name: soft-deletable-bundle-CI
 on:
   [push, pull_request]
 jobs:
-  build:
+  build_php7_4:
     runs-on: ubuntu-latest
     steps:
       - uses: shivammathur/setup-php@v2
@@ -18,34 +18,37 @@ jobs:
 
       - name: composer install
         run: composer install
-            
-      - name: list folder
-        run: ls -ltrah
-        
-  check_code:
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: build_php_7_4
+          path: /
+          retention-days: 1
+
+  check_code_php7_4:
     runs-on: ubuntu-latest
-    needs: [ build ]
-    steps:    
+    needs: [ build_php7_4 ]
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: build_php_7_4
+
       - name: list folder
         run: ls -ltrah
-        
-      - name: check version
-        run: composer --version && php -v
-        
-      - name: check version
-        run: composer --version && php -v
-        
+
       - name: cs-check
         run: composer cs-check
 
-      - name: cs-fix
-        run: composer cs-fix
-
       - name: phpstan
         run: composer phpstan
-  tests:
+
+  tests_php7_4:
     runs-on: ubuntu-latest
-    needs: [ check_code ]
+    needs: [ check_code_php7_4 ]
     steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: build_php_7_4
+
       - name: phpunit
         run: composer phpunit
