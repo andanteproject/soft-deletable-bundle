@@ -19,14 +19,15 @@ jobs:
       - name: composer install
         run: composer install
 
-      - name: pwd
-        run: pwd
+      #- name: pwd
+      #  run: pwd
+        #/home/runner/work/soft-deletable-bundle/soft-deletable-bundle
 
-      #- uses: actions/upload-artifact@v2
-      #  with:
-      #    name: build_php_7_4
-      #    path: /
-      #    retention-days: 1
+      - uses: actions/upload-artifact@v2
+        with:
+          name: build_php_7_4
+          path: ./
+          retention-days: 1
 
   check_code_php7_4:
     runs-on: ubuntu-latest
