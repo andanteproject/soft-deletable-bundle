@@ -26,6 +26,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: build_php_7_4
+          path: ${{ github.workspace }}
           retention-days: 1
 
   check_code_php7_4:
