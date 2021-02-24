@@ -18,7 +18,6 @@ class SoftDeletableEventSubscriber implements EventSubscriber
 
     public function __construct(Configuration $configuration)
     {
-        //TODO: allow to decide if, while querying, check if deletedAt date is in future beside if it's null
         $this->configuration = $configuration;
     }
 

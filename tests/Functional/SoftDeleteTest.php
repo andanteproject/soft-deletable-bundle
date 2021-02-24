@@ -94,7 +94,6 @@ class SoftDeleteTest extends KernelTestCase
         self::assertSame($organization1->getDeletedAt()->format(\DateTimeInterface::ATOM), $organization1DeletedAt->format(\DateTimeInterface::ATOM));
 
         $em->getFilters()->enable(SoftDeletableFilter::NAME);
-        //TODO: insert tests on enable/disable filter only for class
         $addresses = $addressRepository->findAll();
         $organizations = $organizationRepository->findAll();
         self::assertCount(1, $addresses);

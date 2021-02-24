@@ -3,6 +3,18 @@
         colors="true"
         bootstrap="tests/bootstrap.php"
 >
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">src</directory>
+            <exclude>
+                <directory suffix=".php">src/Exception/</directory>
+                <directory suffix=".php">src/Config/</directory>
+                <directory suffix=".php">src/DependencyInjection/</directory>
+                <file>src/Kernel.php</file>
+            </exclude>
+        </whitelist>
+    </filter>
+
     <testsuites>
         <testsuite name="Default test suite">
             <directory>tests</directory>
