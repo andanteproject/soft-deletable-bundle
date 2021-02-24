@@ -5,5 +5,4 @@ namespace Andante\SoftDeletableBundle\Exception;
 
 interface AndateSoftDeletableException
 {
-
 }

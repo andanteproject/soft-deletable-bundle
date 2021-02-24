@@ -21,7 +21,7 @@ class Configuration implements ConfigurationInterface
         //@formatter:off
         /** @var ArrayNodeDefinition $node */
         $node = $treeBuilder->getRootNode();
-            $node->children()
+        $node->children()
                 ->booleanNode('deleted_date_aware')
                     ->defaultTrue()
                 ->end()

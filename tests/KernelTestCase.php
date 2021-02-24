@@ -16,7 +16,8 @@ class KernelTestCase extends \Symfony\Bundle\FrameworkBundle\Test\KernelTestCase
         return AndanteSoftDeletableKernel::class;
     }
 
-    protected function createSchema(): void{
+    protected function createSchema(): void
+    {
         /** @var ManagerRegistry $manager */
         $manager = self::$container->get('doctrine');
         /** @var EntityManagerInterface[] $ems */

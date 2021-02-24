@@ -40,7 +40,7 @@ class MappingTest extends KernelTestCase
         $em = $managerRegistry->getManagerForClass(Organization::class);
         $classMetadata = $em->getClassMetadata(Organization::class);
         self::assertArrayHasKey('deletedAt', $classMetadata->fieldMappings);
-        self::assertSame('deleted_at',$classMetadata->getColumnName('deletedAt'));
+        self::assertSame('deleted_at', $classMetadata->getColumnName('deletedAt'));
         self::assertSame(DeletedAtType::NAME, $classMetadata->fieldMappings['deletedAt']['type']);
         self::assertArrayHasKey('indexes', $classMetadata->table);
         self::assertCount(1, $classMetadata->table['indexes']);
@@ -50,7 +50,7 @@ class MappingTest extends KernelTestCase
         /** @var ClassMetadata $classMetadata */
         $classMetadata = $em->getClassMetadata(Address::class);
         self::assertArrayHasKey('deleted', $classMetadata->fieldMappings);
-        self::assertSame('delete_date',$classMetadata->getColumnName('deleted'));
+        self::assertSame('delete_date', $classMetadata->getColumnName('deleted'));
         self::assertSame(DeletedAtType::NAME, $classMetadata->fieldMappings['deleted']['type']);
         self::assertArrayNotHasKey('indexes', $classMetadata->table);
     }

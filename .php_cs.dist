@@ -1,13 +1,29 @@
 <?php
+/*
+ * Additional rules or rules to override.
+ * These rules will be added to default rules or will override them if the same key already exists.
+ */
+
+$additionalRules = [
+    'native_function_invocation' => true,
+    'phpdoc_add_missing_param_annotation' => ['only_untyped' => false],
+    'phpdoc_align' => true,
+    'phpdoc_return_self_reference' => true,
+    'phpdoc_trim_consecutive_blank_line_separation' => true,
+    'phpdoc_types_order' => ['sort_algorithm' => 'alpha', 'null_adjustment' => 'always_last'],
+    'phpdoc_to_comment' => false,
+    'phpdoc_var_without_name' => false,
+];
+
+$config = PhpCsFixer\Config::create();
+//$config->setRules(['@Symfony' => true]);
+$config->setUsingCache(false);
+$config->setRiskyAllowed(true);
 
 $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__)
-    ->exclude('var')
-;
+    ->exclude('var');
 
-return PhpCsFixer\Config::create()
-    ->setRules([
-        'array_syntax' => ['syntax' => 'short'],
-    ])
-    ->setFinder($finder)
-;
+$config->setFinder($finder);
+
+return $config;
