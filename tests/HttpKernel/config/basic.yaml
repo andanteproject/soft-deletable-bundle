@@ -1,0 +1,4 @@
+andante_soft_deletable:
+  entity:
+    Andante\SoftDeletableBundle\Tests\Fixtures\Entity\Address:
+      property_name: deleted

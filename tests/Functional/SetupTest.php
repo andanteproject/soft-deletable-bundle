@@ -7,6 +7,7 @@ namespace Andante\SoftDeletableBundle\Tests\Functional;
 use Andante\SoftDeletableBundle\DependencyInjection\Compiler\DoctrineEventSubscriberPass;
 use Andante\SoftDeletableBundle\Doctrine\DBAL\Type\DeletedAtType;
 use Andante\SoftDeletableBundle\Doctrine\Filter\SoftDeletableFilter;
+use Andante\SoftDeletableBundle\Tests\HttpKernel\AndanteSoftDeletableKernel;
 use Andante\SoftDeletableBundle\Tests\KernelTestCase;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,6 +19,14 @@ class SetupTest extends KernelTestCase
     {
         parent::setUp();
         self::bootKernel();
+    }
+
+    protected static function createKernel(array $options = []) : AndanteSoftDeletableKernel
+    {
+        /** @var AndanteSoftDeletableKernel $kernel */
+        $kernel = parent::createKernel($options);
+        $kernel->addConfig('/config/basic.yaml');
+        return $kernel;
     }
 
     public function testFilterSetup(): void

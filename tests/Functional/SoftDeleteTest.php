@@ -24,22 +24,21 @@ class SoftDeleteTest extends KernelTestCase
     {
         /** @var AndanteSoftDeletableKernel $kernel */
         $kernel = parent::createKernel($options);
-        $kernel->addConfig('/config/andante_soft_deletable_custom.yaml');
+        $kernel->addConfig('/config/custom_mapping.yaml');
         return $kernel;
     }
 
     public function testShouldSoftDelete(): void
     {
         $this->createSchema();
+        /** @var EntityManagerInterface $em */
+        $em = self::$container->get('doctrine.orm.default_entity_manager');
+
         $address1 = (new Address())->setName('Address1');
         $address2 = (new Address())->setName('Address2');
         $organization1 = (new Organization())->setName('Organization1');
         $organization2 = (new Organization())->setName('Organization2');
-        /** @var ManagerRegistry $managerRegistry */
-        $managerRegistry = self::$container->get('doctrine');
 
-        /** @var EntityManagerInterface $em */
-        $em = $managerRegistry->getManagerForClass(Address::class);
         $em->persist($address1);
         $em->persist($address2);
         $em->persist($organization1);
@@ -94,6 +93,18 @@ class SoftDeleteTest extends KernelTestCase
         self::assertNotSame($address1->getDeletedAt()->format(\DateTimeInterface::ATOM), $address1DeletedAt->format(\DateTimeInterface::ATOM));
         self::assertSame($organization1->getDeletedAt()->format(\DateTimeInterface::ATOM), $organization1DeletedAt->format(\DateTimeInterface::ATOM));
 
+        $em->getFilters()->enable(SoftDeletableFilter::NAME);
         //TODO: insert tests on enable/disable filter only for class
+        $addresses = $addressRepository->findAll();
+        $organizations = $organizationRepository->findAll();
+        self::assertCount(1, $addresses);
+        self::assertCount(1, $organizations);
+        /** @var SoftDeletableFilter $filter */
+        $filter = $em->getFilters()->getFilter(SoftDeletableFilter::NAME);
+        $filter->disableForEntity(Address::class);
+        $addresses = $addressRepository->findAll();
+        $organizations = $organizationRepository->findAll();
+        self::assertCount(2, $addresses);
+        self::assertCount(1, $organizations);
     }
 }

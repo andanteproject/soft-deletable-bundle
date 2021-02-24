@@ -43,7 +43,8 @@
         "phpstan/phpstan": "^0.12.78",
         "phpstan/phpstan-phpunit": "^0.12.17",
         "phpstan/extension-installer": "^1.1",
-        "phpstan/phpstan-symfony": "^0.12.20"
+        "phpstan/phpstan-symfony": "^0.12.20",
+        "ext-json": "*"
     },
     "autoload": {
         "psr-4": {

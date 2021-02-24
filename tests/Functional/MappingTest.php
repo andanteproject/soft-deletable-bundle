@@ -27,17 +27,15 @@ class MappingTest extends KernelTestCase
     {
         /** @var AndanteSoftDeletableKernel $kernel */
         $kernel = parent::createKernel($options);
-        $kernel->addConfig('/config/andante_soft_deletable_custom.yaml');
+        $kernel->addConfig('/config/custom_mapping.yaml');
         return $kernel;
     }
 
 
     public function testMapping(): void
     {
-        /** @var ManagerRegistry $managerRegistry */
-        $managerRegistry = self::$container->get('doctrine');
         /** @var EntityManagerInterface $em */
-        $em = $managerRegistry->getManagerForClass(Organization::class);
+        $em = self::$container->get('doctrine.orm.default_entity_manager');
         $classMetadata = $em->getClassMetadata(Organization::class);
         self::assertArrayHasKey('deletedAt', $classMetadata->fieldMappings);
         self::assertSame('deleted_at', $classMetadata->getColumnName('deletedAt'));
@@ -45,8 +43,6 @@ class MappingTest extends KernelTestCase
         self::assertArrayHasKey('indexes', $classMetadata->table);
         self::assertCount(1, $classMetadata->table['indexes']);
 
-        /** @var EntityManagerInterface $em */
-        $em = $managerRegistry->getManagerForClass(Address::class);
         /** @var ClassMetadata $classMetadata */
         $classMetadata = $em->getClassMetadata(Address::class);
         self::assertArrayHasKey('deleted', $classMetadata->fieldMappings);

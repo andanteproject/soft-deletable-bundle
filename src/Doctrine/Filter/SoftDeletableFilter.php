@@ -71,7 +71,7 @@ class SoftDeletableFilter extends SQLFilter
             $column = $targetEntity->getQuotedColumnName($softDeletableFiledName, $platform);
 
             $expression = $platform->getIsNullExpression(sprintf("%s.%s", $targetTableAlias, $column));
-            if ($this->hasParameter('deleted_date_aware') && $this->getParameter('deleted_date_aware')) {
+            if ($this->hasParameter('deleted_date_aware') && $this->getParameter('deleted_date_aware') === "'1'") {
                 $expression .= \sprintf(
                     ' OR %s.%s >= %s',
                     $targetTableAlias,

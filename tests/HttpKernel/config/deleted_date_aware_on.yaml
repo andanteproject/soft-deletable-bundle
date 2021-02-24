@@ -1,0 +1,5 @@
+andante_soft_deletable:
+  deleted_date_aware: true
+  entity:
+    Andante\SoftDeletableBundle\Tests\Fixtures\Entity\Address:
+      property_name: deleted
