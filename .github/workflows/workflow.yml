@@ -13,12 +13,15 @@ jobs:
       - name: check version
         run: composer --version && php -v
         
-      # Checks-out repository
+      # Checkout repository
       - uses: actions/checkout@v2
 
       - name: composer install
         run: composer install
-
+  check_code:
+    runs-on: ubuntu-latest
+    needs: [ build ]
+    steps:
       - name: cs-check
         run: composer cs-check
 
@@ -27,6 +30,9 @@ jobs:
 
       - name: phpstan
         run: composer phpstan
-
+  tests:
+    runs-on: ubuntu-latest
+    needs: [ check_code ]
+    steps:
       - name: phpunit
         run: composer phpunit
