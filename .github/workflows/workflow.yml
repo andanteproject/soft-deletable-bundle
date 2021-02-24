@@ -7,38 +7,53 @@ jobs:
     steps:
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'  
-          #extensions: :opcache
-    
-      - name: check version
-        run: composer --version && php -v
-        
-      # Checkout repository
+          php-version: '7.4'
       - uses: actions/checkout@v2
-
       - name: composer install
         run: composer install
 
-      #- name: pwd
-      #  run: pwd
-        #/home/runner/work/soft-deletable-bundle/soft-deletable-bundle
+#      - uses: actions/upload-artifact@v2
+#        with:
+#          name: build_php_7_4
+#          path: ${{ github.workspace }}
+#          retention-days: 1
 
-      - uses: actions/upload-artifact@v2
-        with:
-          name: build_php_7_4
-          path: ${{ github.workspace }}
-          retention-days: 1
+  build_php_8:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: composer install
+        run: composer install
+#      - uses: actions/upload-artifact@v2
+#        with:
+#          name: build_php_8
+#          path: ${{ github.workspace }}
+#          retention-days: 1
 
   check_code_php7_4:
     runs-on: ubuntu-latest
     needs: [ build_php7_4 ]
     steps:
-      - uses: actions/download-artifact@v2
+      - uses: shivammathur/setup-php@v2
         with:
-          name: build_php_7_4
+          php-version: '7.4'
+      - uses: actions/checkout@v2
+      - name: composer install
+        run: composer install
 
-      - name: list folder
-        run: ls -ltrah
+      - name: cs-check
+        run: composer cs-check
+
+      - name: phpstan
+        run: composer phpstan
+
+  check_code_php_8:
+    runs-on: ubuntu-latest
+    needs: [ build_php_8 ]
+    steps:
+      - uses: actions/checkout@v2
+      - name: composer install
+        run: composer install
 
       - name: cs-check
         run: composer cs-check
@@ -50,9 +65,23 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ check_code_php7_4 ]
     steps:
-      - uses: actions/download-artifact@v2
+      - uses: shivammathur/setup-php@v2
         with:
-          name: build_php_7_4
+          php-version: '7.4'
+      - uses: actions/checkout@v2
+      - name: composer install
+        run: composer install
+
+      - name: phpunit
+        run: composer phpunit
+
+  tests_php_8:
+    runs-on: ubuntu-latest
+    needs: [ check_code_php_8 ]
+    steps:
+      - uses: actions/checkout@v2
+      - name: composer install
+        run: composer install
 
       - name: phpunit
         run: composer phpunit
