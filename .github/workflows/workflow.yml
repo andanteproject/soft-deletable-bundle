@@ -21,7 +21,16 @@ jobs:
   check_code:
     runs-on: ubuntu-latest
     needs: [ build ]
-    steps:
+    steps:    
+      - name: list folder
+        run: ls -ltrah
+        
+      - name: check version
+        run: composer --version && php -v
+        
+      - name: check version
+        run: composer --version && php -v
+        
       - name: cs-check
         run: composer cs-check
 
