@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit colors="true" bootstrap="tests/bootstrap.php">
-    <php>
-        <env name="APP_DEBUG" value="false" />
-    </php>
-    <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">src</directory>
-            <exclude>
-                <directory suffix=".php">src/Exception/</directory>
-                <directory suffix=".php">src/Config/</directory>
-                <directory suffix=".php">src/DependencyInjection/</directory>
-                <file>src/Kernel.php</file>
-            </exclude>
-        </whitelist>
-    </filter>
-
-    <testsuites>
-        <testsuite name="Default test suite">
-            <directory>tests</directory>
-        </testsuite>
-    </testsuites>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" colors="true" bootstrap="tests/bootstrap.php" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+  <coverage processUncoveredFiles="true">
+    <include>
+      <directory suffix=".php">src</directory>
+    </include>
+    <exclude>
+      <directory suffix=".php">src/Exception/</directory>
+      <directory suffix=".php">src/Config/</directory>
+      <directory suffix=".php">src/DependencyInjection/</directory>
+      <file>src/Kernel.php</file>
+    </exclude>
+  </coverage>
+  <php>
+    <env name="APP_DEBUG" value="false"/>
+  </php>
+  <testsuites>
+    <testsuite name="Default test suite">
+      <directory>tests</directory>
+    </testsuite>
+  </testsuites>
 </phpunit>
