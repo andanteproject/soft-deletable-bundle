@@ -62,7 +62,9 @@ class SoftDeleteTest extends KernelTestCase
         self::assertCount(1, $addresses);
         self::assertCount(1, $organizations);
 
+        /** @var Address $address2 */
         $address2 = \reset($addresses);
+        /** @var Organization $organization2 */
         $organization2 = \reset($organizations);
 
         self::assertSame($address2->getName(), 'Address2');

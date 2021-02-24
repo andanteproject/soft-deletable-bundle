@@ -12,6 +12,7 @@ use Andante\SoftDeletableBundle\Tests\Fixtures\Entity\Organization;
 use Andante\SoftDeletableBundle\Tests\HttpKernel\AndanteSoftDeletableKernel;
 use Andante\SoftDeletableBundle\Tests\KernelTestCase;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\Persistence\ManagerRegistry;
 
 class MappingTest extends KernelTestCase
@@ -44,7 +45,9 @@ class MappingTest extends KernelTestCase
         self::assertArrayHasKey('indexes', $classMetadata->table);
         self::assertCount(1, $classMetadata->table['indexes']);
 
+        /** @var EntityManagerInterface $em */
         $em = $managerRegistry->getManagerForClass(Address::class);
+        /** @var ClassMetadata $classMetadata */
         $classMetadata = $em->getClassMetadata(Address::class);
         self::assertArrayHasKey('deleted', $classMetadata->fieldMappings);
         self::assertSame('delete_date',$classMetadata->getColumnName('deleted'));
