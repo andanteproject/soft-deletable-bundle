@@ -1,5 +1,6 @@
 .idea
 /var/cache/*
+/var/*.db
 /var/logs/*
 .phpunit.result.cache
 composer.lock
