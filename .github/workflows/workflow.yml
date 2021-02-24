@@ -18,6 +18,10 @@ jobs:
 
       - name: composer install
         run: composer install
+            
+      - name: list folder
+        run: ls -ltrah
+        
   check_code:
     runs-on: ubuntu-latest
     needs: [ build ]
