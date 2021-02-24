@@ -26,7 +26,6 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: build_php_7_4
-          path: ./
           retention-days: 1
 
   check_code_php7_4:
