@@ -8,8 +8,10 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '7.4'
-      - name: mysql
+      - name: mysql version
         run: mysql --version
+      - name: mysql
+        run: mysql -u root 
 
 #      - uses: actions/checkout@v2
 #      - name: composer install
