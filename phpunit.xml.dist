@@ -13,6 +13,8 @@
   </coverage>
   <php>
     <env name="APP_DEBUG" value="false"/>
+    <env name="DATABASE_URL" value="mysql://root:root@127.0.0.1:3306/test?serverVersion=5.7"/>
+    <!-- <env name="DATABASE_URL" value="sqlite:///%kernel.project_dir%/var/test_database.db"/> -->
   </php>
   <testsuites>
     <testsuite name="Default test suite">
