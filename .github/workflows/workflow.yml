@@ -8,5 +8,8 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '7.4'
+      - name: mysql version
+        run: mysql --version
+        
       - name: mysql test
-        run: mysql -u root -p root 
+        run: mysql -uroot -proot -h localhost test
