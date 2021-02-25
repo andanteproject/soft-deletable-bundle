@@ -2,7 +2,7 @@ name: soft-deletable-bundle-CI
 on:
   [push, pull_request]
 jobs:
-  build_php_7_4:
+  build-php-7-4:
     runs-on: ubuntu-latest
     steps:
       - uses: shivammathur/setup-php@v2
@@ -14,20 +14,20 @@ jobs:
 #      too slow
 #      - uses: actions/upload-artifact@v2
 #        with:
-#          name: build_php_7_4
+#          name: build-php-7-4
 #          path: ${{ github.workspace }}
 #          retention-days: 1
 
-  build_php_8:
+  build-php-8:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: composer install
         run: composer install
 
-  check_code_php_7_4:
+  check-code-php-7-4:
     runs-on: ubuntu-latest
-    needs: [ build_php_7_4 ]
+    needs: [ build-php-7-4 ]
     steps:
       - uses: shivammathur/setup-php@v2
         with:
@@ -42,9 +42,9 @@ jobs:
       - name: phpstan
         run: composer phpstan
 
-  check_code_php_8:
+  check-code-php-8:
     runs-on: ubuntu-latest
-    needs: [ build_php_8 ]
+    needs: [ build-php-8 ]
     steps:
       - uses: actions/checkout@v2
       - name: composer install
@@ -56,9 +56,9 @@ jobs:
       - name: phpstan
         run: composer phpstan
 
-  tests_php7_4:
+  tests-php-7-4:
     runs-on: ubuntu-latest
-    needs: [ build_php_7_4 ]
+    needs: [ build-php-7-4 ]
     steps:
       - uses: shivammathur/setup-php@v2
         with:
@@ -77,9 +77,9 @@ jobs:
       - name: phpunit
         run: composer phpunit
 
-  tests_php_8:
+  tests-php-8:
     runs-on: ubuntu-latest
-    needs: [ build_php_8 ]
+    needs: [ build-php-8 ]
     steps:
       - uses: actions/checkout@v2
       - name: composer install
