@@ -9,16 +9,11 @@ jobs:
         with:
           php-version: '7.4'
           
-      - name: mysql version
-        run:  sudo systemctl enable mysql.service
-        
-          
-      - name: mysql version
-        run:  sudo systemctl start mysql.service
-  
-          
-      - name: mysql version
-        run: mysql --version
-        
-      - name: mysql test
+      - name: setting mysql
+        run: |
+          sudo systemctl enable mysql.service
+          sudo systemctl start mysql.service
+          mysql -uroot -proot -h localhost -e "CREATE DATABASE test CHARACTER SET utf8 COLLATE utf8_general_ci;"
+
+      - name: test mysql
         run: mysql -uroot -proot -h localhost test
