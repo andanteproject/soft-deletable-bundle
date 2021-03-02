@@ -12,8 +12,6 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
-    public const DEFAULT_DELETE_AT_PROPERTY_NAME = 'deletedAt';
-
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('andante_soft_deletable');
