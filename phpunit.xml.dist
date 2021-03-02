@@ -8,7 +8,6 @@
       <directory suffix=".php">src/Exception/</directory>
       <directory suffix=".php">src/Config/</directory>
       <directory suffix=".php">src/DependencyInjection/</directory>
-      <file>src/Kernel.php</file>
     </exclude>
   </coverage>
   <php>

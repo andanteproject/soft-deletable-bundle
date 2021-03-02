@@ -67,7 +67,8 @@ class Article implements SoftDeletableInterface // <-- implement this
      */
     private string $title;
     
-    public function __construct(string $title){
+    public function __construct(string $title)
+    {
         $this->title = $title;
     }
     
@@ -151,15 +152,18 @@ class Article implements SoftDeletableInterface // <-- implement this
     // DO NOT use ORM annotations to map this property. See bundle configuration section for more info 
     private ?\DateTimeImmutable $deletedAt = null; 
     
-    public function __construct(string $title){
+    public function __construct(string $title)
+    {
         $this->title = $title;
     }
     
-    public function getDeletedAt() : ?\DateTimeImmutable{
+    public function getDeletedAt() : ?\DateTimeImmutable
+    {
         return $this->deletedAt;
     }
 
-    public function setDeletedAt(\DateTimeImmutable $deletedAt = null) : void{
+    public function setDeletedAt(\DateTimeImmutable $deletedAt = null) : void
+    {
         $this->deletedAt = $deletedAt;
     }
 }
