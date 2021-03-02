@@ -69,37 +69,4 @@ class Configuration implements ConfigurationInterface
 
         return $treeBuilder;
     }
-
-    private function addEntityConfigurationNode(string $rootName): NodeDefinition
-    {
-        $node = new ArrayNodeDefinition($rootName);
-        //@formatter:off
-        $node
-            ->useAttributeAsKey('entity')
-            ->addDefaultsIfNotSet()
-            ->arrayPrototype()
-            ->children()
-                ->scalarNode('entity')
-                    ->defaultValue('default')
-                ->end()
-                ->scalarNode('property_name')
-                    ->defaultValue(EntityConfiguration::DEFAULT_DELETED_AT_PROPERTY_NAME)
-                    ->info('Entity property to be mapped as deletedAt property')
-                ->end()
-                ->scalarNode('column_name')
-                    ->defaultNull()
-                    ->info('Database column name to be used. Set to "null" to use default doctrine naming strategy')
-                ->end()
-                ->scalarNode('table_index')
-                    ->defaultTrue()
-                    ->info('If TRUE, adds a table index to the deletedAt property')
-                ->end()
-                ->scalarNode('always_update_deleted_at')
-                    ->defaultTrue()
-                    ->info('If true, deletedAt property will be always updated on delete, even if there is already a "deletedAt" date')
-                ->end()
-            ->end();
-        //@formatter:on
-        return $node;
-    }
 }
