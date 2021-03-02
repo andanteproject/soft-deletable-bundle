@@ -128,7 +128,6 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Andante\SoftDeletableBundle\SoftDeletable\SoftDeletableInterface;
-use Andante\SoftDeletableBundle\SoftDeletable\SoftDeletableTrait;
 
 /**
  * @ORM\Entity()
