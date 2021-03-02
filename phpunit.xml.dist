@@ -8,6 +8,8 @@
       <directory suffix=".php">src/Exception/</directory>
       <directory suffix=".php">src/Config/</directory>
       <directory suffix=".php">src/DependencyInjection/</directory>
+      <directory suffix=".php">src/SoftDeletable/</directory>
+      <file>src/AndanteSoftDeletableBundle.php</file>
     </exclude>
   </coverage>
   <php>
