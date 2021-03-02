@@ -7,6 +7,7 @@ namespace Andante\SoftDeletableBundle\Tests\Functional;
 use Andante\SoftDeletableBundle\DependencyInjection\Compiler\DoctrineEventSubscriberPass;
 use Andante\SoftDeletableBundle\Doctrine\DBAL\Type\DeletedAtType;
 use Andante\SoftDeletableBundle\Doctrine\Filter\SoftDeletableFilter;
+use Andante\SoftDeletableBundle\EventSubscriber\SoftDeletableEventSubscriber;
 use Andante\SoftDeletableBundle\Tests\HttpKernel\AndanteSoftDeletableKernel;
 use Andante\SoftDeletableBundle\Tests\KernelTestCase;
 use Doctrine\DBAL\Types\Type;
@@ -56,7 +57,16 @@ class SetupTest extends KernelTestCase
             $r = new \ReflectionProperty($evm, 'subscribers');
             $r->setAccessible(true);
             $subscribers = $r->getValue($evm);
-            self::assertContains(DoctrineEventSubscriberPass::SOFT_DELETABLE_SUBSCRIBER_SERVICE_ID, $subscribers);
+            $serviceIdRegistered = \in_array(
+                DoctrineEventSubscriberPass::SOFT_DELETABLE_SUBSCRIBER_SERVICE_ID,
+                $subscribers,
+                true
+            );
+            $serviceRegistered = \array_reduce($subscribers, static fn (
+                bool $carry,
+                object $service
+            ) => $carry ? $carry : $service instanceof SoftDeletableEventSubscriber, false);
+            self::assertTrue($serviceIdRegistered || $serviceRegistered);
         }
     }
 }
