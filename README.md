@@ -20,7 +20,7 @@ $ composer require andanteproject/soft-deletable-bundle
 
 ## Features
 - No configuration required to be ready to go but fully customizabile;
-- `deleteAt` property is as a `?\DateTimeImmutable`;-
+- `deleteAt` property is as a `?\DateTimeImmutable`;
 - You can disable the filter runtime even for just some entities; 
 - No annotation required;
 - Works like magic ✨.
