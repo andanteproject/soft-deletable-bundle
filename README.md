@@ -228,4 +228,4 @@ andante_soft_deletable:
 - This bundle does not handle direct [DQL](https://www.doctrine-project.org/projects/doctrine-orm/en/2.7/reference/dql-doctrine-query-language.html) queries;
 - The default setting of `deleted_date_aware` is `false`. The filter is going to exclude whatever row with a `NOT NULL` deleted date. If you want to exclude only rows with a `deletedAt` date in the past and still retrieving the ones with future dates, you need to set `deleted_date_aware` to `true`. 
 
-Built with love ❤️by [AndanteProject](https://github.com/andanteproject) team.
+Built with love ❤️ by [AndanteProject](https://github.com/andanteproject) team.
