@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Andante\SoftDeletableBundle\Tests\Functional;
 
-use Andante\SoftDeletableBundle\AndanteSoftDeletableBundle;
-use Andante\SoftDeletableBundle\DependencyInjection\Configuration;
 use Andante\SoftDeletableBundle\Doctrine\DBAL\Type\DeletedAtType;
 use Andante\SoftDeletableBundle\Tests\Fixtures\Entity\Address;
 use Andante\SoftDeletableBundle\Tests\Fixtures\Entity\Organization;
@@ -13,7 +11,6 @@ use Andante\SoftDeletableBundle\Tests\HttpKernel\AndanteSoftDeletableKernel;
 use Andante\SoftDeletableBundle\Tests\KernelTestCase;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Doctrine\Persistence\ManagerRegistry;
 
 class MappingTest extends KernelTestCase
 {
@@ -23,14 +20,14 @@ class MappingTest extends KernelTestCase
         self::bootKernel();
     }
 
-    protected static function createKernel(array $options = []) : AndanteSoftDeletableKernel
+    protected static function createKernel(array $options = []): AndanteSoftDeletableKernel
     {
         /** @var AndanteSoftDeletableKernel $kernel */
         $kernel = parent::createKernel($options);
         $kernel->addConfig('/config/custom_mapping.yaml');
+
         return $kernel;
     }
-
 
     public function testMapping(): void
     {

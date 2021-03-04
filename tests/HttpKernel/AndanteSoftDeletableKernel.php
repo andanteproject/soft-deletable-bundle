@@ -25,7 +25,7 @@ class AndanteSoftDeletableKernel extends Kernel
 
     public function registerContainerConfiguration(LoaderInterface $loader): void
     {
-        $loader->load(__DIR__ . '/config/config_test.yaml');
+        $loader->load(__DIR__.'/config/config_test.yaml');
 
         foreach ($this->configs as $config) {
             $loader->load($config);
@@ -34,24 +34,26 @@ class AndanteSoftDeletableKernel extends Kernel
 
     public function getCacheDir(): string
     {
-        return \sprintf(__DIR__ . '/../../var/cache/test/%s/', hash('crc32b', ((string) \json_encode($this->configs))));
+        return \sprintf(__DIR__.'/../../var/cache/test/%s/', \hash('crc32b', ((string) \json_encode($this->configs))));
     }
 
     public function getLogDir(): string
     {
-        return __DIR__ . '/../../var/logs/test/';
+        return __DIR__.'/../../var/logs/test/';
     }
 
     public function setConfigs(array $configs): self
     {
         $this->configs = $configs;
+
         return $this;
     }
 
     public function addConfig(string $configPath, bool $addKernelDirPrefix = true): self
     {
-        $configPath = $addKernelDirPrefix ? __DIR__ . $configPath : $configPath;
+        $configPath = $addKernelDirPrefix ? __DIR__.$configPath : $configPath;
         $this->configs[] = $configPath;
+
         return $this;
     }
 }

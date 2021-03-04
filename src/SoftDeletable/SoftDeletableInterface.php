@@ -6,7 +6,7 @@ namespace Andante\SoftDeletableBundle\SoftDeletable;
 
 interface SoftDeletableInterface
 {
-    public function getDeletedAt() : ?\DateTimeImmutable;
+    public function getDeletedAt(): ?\DateTimeImmutable;
 
-    public function setDeletedAt(\DateTimeImmutable $deletedAt = null) : void;
+    public function setDeletedAt(\DateTimeImmutable $deletedAt = null): void;
 }

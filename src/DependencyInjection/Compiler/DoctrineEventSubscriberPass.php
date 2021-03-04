@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Andante\SoftDeletableBundle\DependencyInjection\Compiler;
 
-use Andante\SoftDeletableBundle\DependencyInjection\AndanteSoftDeletableExtension;
 use Andante\SoftDeletableBundle\EventSubscriber\SoftDeletableEventSubscriber;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

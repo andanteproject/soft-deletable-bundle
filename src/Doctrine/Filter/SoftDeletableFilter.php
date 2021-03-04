@@ -24,54 +24,39 @@ class SoftDeletableFilter extends SQLFilter
     {
         if ($targetEntity->getReflectionClass()->implementsInterface(SoftDeletableInterface::class)) {
             if (
-                array_key_exists($targetEntity->getName(), $this->disabled) &&
-                $this->disabled[$targetEntity->getName()] === true
+                \array_key_exists($targetEntity->getName(), $this->disabled) &&
+                true === $this->disabled[$targetEntity->getName()]
             ) {
                 return '';
             }
 
             if (
-                array_key_exists($targetEntity->rootEntityName, $this->disabled) &&
-                $this->disabled[$targetEntity->rootEntityName] === true
+                \array_key_exists($targetEntity->rootEntityName, $this->disabled) &&
+                true === $this->disabled[$targetEntity->rootEntityName]
             ) {
                 return '';
             }
 
             $softDeletableFiledName = null;
             foreach ($targetEntity->fieldMappings as $fieldMapping) {
-                if ($fieldMapping['type'] === DeletedAtType::NAME) {
+                if (DeletedAtType::NAME === $fieldMapping['type']) {
                     if (null !== $softDeletableFiledName) {
-                        throw new MappingException(
-                            \sprintf(
-                                'Invalid soft deletable mapping for entity %s. Multiple properties found with column type "%s". Each entity can only have one soft delete property (Found "%s" and "%s").',
-                                $targetEntity->getName(),
-                                DeletedAtType::NAME,
-                                $softDeletableFiledName,
-                                $fieldMapping['fieldName']
-                            )
-                        );
+                        throw new MappingException(\sprintf('Invalid soft deletable mapping for entity %s. Multiple properties found with column type "%s". Each entity can only have one soft delete property (Found "%s" and "%s").', $targetEntity->getName(), DeletedAtType::NAME, $softDeletableFiledName, $fieldMapping['fieldName']));
                     }
                     $softDeletableFiledName = $fieldMapping['fieldName'];
                 }
             }
 
             if (null === $softDeletableFiledName) {
-                throw new MappingException(
-                    \sprintf(
-                        'Entity "%s" implements %s but no property mapped with doctrine type "%s" found',
-                        $targetEntity->getName(),
-                        SoftDeletableInterface::class,
-                        DeletedAtType::NAME
-                    )
-                );
+                throw new MappingException(\sprintf('Entity "%s" implements %s but no property mapped with doctrine type "%s" found', $targetEntity->getName(), SoftDeletableInterface::class, DeletedAtType::NAME));
             }
 
             $conn = $this->getEntityManager()->getConnection();
             $platform = $conn->getDatabasePlatform();
             $column = $targetEntity->getQuotedColumnName($softDeletableFiledName, $platform);
 
-            $expression = $platform->getIsNullExpression(sprintf("%s.%s", $targetTableAlias, $column));
-            if ($this->hasParameter('deleted_date_aware') && $this->getParameter('deleted_date_aware') === "'1'") {
+            $expression = $platform->getIsNullExpression(\sprintf('%s.%s', $targetTableAlias, $column));
+            if ($this->hasParameter('deleted_date_aware') && "'1'" === $this->getParameter('deleted_date_aware')) {
                 $expression .= \sprintf(
                     ' OR %s.%s >= %s',
                     $targetTableAlias,
@@ -79,8 +64,10 @@ class SoftDeletableFilter extends SQLFilter
                     $platform->getCurrentTimestampSQL()
                 );
             }
+
             return $expression;
         }
+
         return '';
     }
 
@@ -91,18 +78,21 @@ class SoftDeletableFilter extends SQLFilter
             $r->setAccessible(true);
             $this->entityManager = $r->getValue($this);
         }
+
         return $this->entityManager;
     }
 
     public function disableForEntity(string $class): self
     {
         $this->disabled[$class] = true;
+
         return $this;
     }
 
     public function enableForEntity(string $class): self
     {
         $this->disabled[$class] = false;
+
         return $this;
     }
 }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Andante\SoftDeletableBundle\SoftDeletable;
 
 /**
- * @property null|\DateTimeImmutable $deletedAt
+ * @property \DateTimeImmutable|null $deletedAt
  */
 trait SoftDeletableMethodsTrait
 {

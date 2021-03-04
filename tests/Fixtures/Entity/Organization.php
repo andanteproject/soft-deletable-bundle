@@ -20,12 +20,12 @@ class Organization implements SoftDeletableInterface
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private ?int $id  = null;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    private ?string $name  = null;
+    private ?string $name = null;
 
     public function getId(): ?int
     {
@@ -40,6 +40,7 @@ class Organization implements SoftDeletableInterface
     public function setName(?string $name): self
     {
         $this->name = $name;
+
         return $this;
     }
 }

@@ -13,10 +13,11 @@ $additionalRules = [
     'phpdoc_types_order' => ['sort_algorithm' => 'alpha', 'null_adjustment' => 'always_last'],
     'phpdoc_to_comment' => false,
     'phpdoc_var_without_name' => false,
+    '@Symfony' => true,
 ];
 
 $config = PhpCsFixer\Config::create();
-//$config->setRules(['@Symfony' => true]);
+$config->setRules($additionalRules);
 $config->setUsingCache(false);
 $config->setRiskyAllowed(true);
 

@@ -34,17 +34,17 @@ class SoftDeletableEventSubscriber implements EventSubscriber
         $entityManager = $onFlushEventArgs->getEntityManager();
         $unitOfWork = $entityManager->getUnitOfWork();
         foreach ($unitOfWork->getScheduledEntityDeletions() as $entity) {
-            if (! $entity instanceof SoftDeletableInterface) {
+            if (!$entity instanceof SoftDeletableInterface) {
                 continue;
             }
             $oldValue = $entity->getDeletedAt();
-            if ($oldValue === null || $this->configuration->isAlwaysUpdateDeleteAtForClass(get_class($entity))) {
+            if (null === $oldValue || $this->configuration->isAlwaysUpdateDeleteAtForClass(\get_class($entity))) {
                 $entity->setDeletedAt(new \DateTimeImmutable());
             }
             $newValue = $entity->getDeletedAt();
             $entityManager->persist($entity);
 
-            $deleteAtPropertyName = $this->configuration->getPropertyNameForClass(get_class($entity));
+            $deleteAtPropertyName = $this->configuration->getPropertyNameForClass(\get_class($entity));
             $unitOfWork->propertyChanged($entity, $deleteAtPropertyName, $oldValue, $newValue);
             $unitOfWork->scheduleExtraUpdate($entity, [
                 $deleteAtPropertyName => [$oldValue, $newValue],
@@ -55,11 +55,11 @@ class SoftDeletableEventSubscriber implements EventSubscriber
     public function loadClassMetadata(LoadClassMetadataEventArgs $loadClassMetadataEventArgs): void
     {
         $classMetadata = $loadClassMetadataEventArgs->getClassMetadata();
-        if ($classMetadata->reflClass === null) {
+        if (null === $classMetadata->reflClass) {
             return;
         }
 
-        if (! is_a($classMetadata->reflClass->getName(), SoftDeletableInterface::class, true)) {
+        if (!\is_a($classMetadata->reflClass->getName(), SoftDeletableInterface::class, true)) {
             return;
         }
         $className = $classMetadata->reflClass->getName();
@@ -80,7 +80,7 @@ class SoftDeletableEventSubscriber implements EventSubscriber
 
         if ($this->configuration->isTableIndexForClass($className)) {
             // Add an index to table
-            if (! isset($classMetadata->table['indexes'])) {
+            if (!isset($classMetadata->table['indexes'])) {
                 $classMetadata->table['indexes'] = [];
             }
             $classMetadata->table['indexes'][] =

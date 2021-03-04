@@ -21,6 +21,7 @@ class EntityConfiguration
     public function setPropertyName(string $propertyName): self
     {
         $this->propertyName = $propertyName;
+
         return $this;
     }
 
@@ -32,6 +33,7 @@ class EntityConfiguration
     public function setColumnName(?string $columnName): self
     {
         $this->columnName = $columnName;
+
         return $this;
     }
 
@@ -43,6 +45,7 @@ class EntityConfiguration
     public function setTableIndex(bool $tableIndex): self
     {
         $this->tableIndex = $tableIndex;
+
         return $this;
     }
 
@@ -54,6 +57,7 @@ class EntityConfiguration
     public function setAlwaysUpdateDeleteAt(bool $alwaysUpdateDeleteAt): self
     {
         $this->alwaysUpdateDeleteAt = $alwaysUpdateDeleteAt;
+
         return $this;
     }
 
@@ -80,6 +84,7 @@ class EntityConfiguration
         } elseif (null !== $fallbackConfig) {
             $entityConfiguration->setAlwaysUpdateDeleteAt($fallbackConfig->isAlwaysUpdateDeleteAt());
         }
+
         return $entityConfiguration;
     }
 }

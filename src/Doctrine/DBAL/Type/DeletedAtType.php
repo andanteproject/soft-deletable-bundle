@@ -8,7 +8,7 @@ use Doctrine\DBAL\Types\VarDateTimeImmutableType;
 
 class DeletedAtType extends VarDateTimeImmutableType
 {
-    public const NAME = "deleted_at";
+    public const NAME = 'deleted_at';
 
     public function getName(): string
     {

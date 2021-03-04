@@ -10,7 +10,6 @@ use Andante\SoftDeletableBundle\Tests\Fixtures\Entity\Organization;
 use Andante\SoftDeletableBundle\Tests\HttpKernel\AndanteSoftDeletableKernel;
 use Andante\SoftDeletableBundle\Tests\KernelTestCase;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
 
 class SoftDeleteTest extends KernelTestCase
 {
@@ -25,6 +24,7 @@ class SoftDeleteTest extends KernelTestCase
         /** @var AndanteSoftDeletableKernel $kernel */
         $kernel = parent::createKernel($options);
         $kernel->addConfig('/config/custom_mapping.yaml');
+
         return $kernel;
     }
 
@@ -55,7 +55,7 @@ class SoftDeleteTest extends KernelTestCase
         $em->remove($organization1);
 
         $em->flush();
-        sleep(1); //Giving time to mysqlite to update file
+        \sleep(1); //Giving time to mysqlite to update file
         $addresses = $addressRepository->findAll();
         $organizations = $organizationRepository->findAll();
         self::assertCount(1, $addresses);
@@ -89,7 +89,7 @@ class SoftDeleteTest extends KernelTestCase
         $em->remove($address1);
         $em->remove($organization1);
         $em->flush();
-        sleep(1); //Giving time to mysqlite to update file
+        \sleep(1); //Giving time to mysqlite to update file
         self::assertNotSame($address1->getDeletedAt()->format(\DateTimeInterface::ATOM), $address1DeletedAt->format(\DateTimeInterface::ATOM));
         self::assertSame($organization1->getDeletedAt()->format(\DateTimeInterface::ATOM), $organization1DeletedAt->format(\DateTimeInterface::ATOM));
 

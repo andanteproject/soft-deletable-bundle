@@ -43,8 +43,8 @@ class AndanteSoftDeletableExtension extends Extension implements PrependExtensio
                         'class' => SoftDeletableFilter::class,
                         'enabled' => true,
                         'parameters' => [
-                            'deleted_date_aware' => $config['deleted_date_aware']
-                        ]
+                            'deleted_date_aware' => $config['deleted_date_aware'],
+                        ],
                     ],
                 ],
             ],

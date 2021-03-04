@@ -11,7 +11,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class AndanteSoftDeletableBundle extends Bundle
 {
-    public function build(ContainerBuilder $container) : void
+    public function build(ContainerBuilder $container): void
     {
         parent::build($container);
 

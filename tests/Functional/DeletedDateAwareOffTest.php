@@ -8,7 +8,6 @@ use Andante\SoftDeletableBundle\Tests\Fixtures\Entity\Organization;
 use Andante\SoftDeletableBundle\Tests\HttpKernel\AndanteSoftDeletableKernel;
 use Andante\SoftDeletableBundle\Tests\KernelTestCase;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
 
 class DeletedDateAwareOffTest extends KernelTestCase
 {
@@ -23,6 +22,7 @@ class DeletedDateAwareOffTest extends KernelTestCase
         /** @var AndanteSoftDeletableKernel $kernel */
         $kernel = parent::createKernel($options);
         $kernel->addConfig('/config/deleted_date_aware_off.yaml');
+
         return $kernel;
     }
 
@@ -35,19 +35,19 @@ class DeletedDateAwareOffTest extends KernelTestCase
         $organization = new Organization();
         $em->persist($organization);
         $em->flush();
-        sleep(1);
+        \sleep(1);
         self::assertCount(1, $organizationRepository->findAll());
 
         $em->remove($organization);
         $em->flush();
-        sleep(1);
+        \sleep(1);
         self::assertCount(0, $organizationRepository->findAll());
 
         $organization = new Organization();
         $organization->setDeletedAt(new \DateTimeImmutable('+1 hour'));
         $em->persist($organization);
         $em->flush();
-        sleep(1);
+        \sleep(1);
 
         self::assertCount(0, $organizationRepository->findAll());
     }

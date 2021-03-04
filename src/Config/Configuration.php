@@ -34,14 +34,16 @@ class Configuration
     public function addEntityConfiguration(string $entityClass, EntityConfiguration $entitiesConfiguration): self
     {
         $this->entitiesConfigurations[$entityClass] = $entitiesConfiguration;
+
         return $this;
     }
 
     public function removeEntityConfiguration(string $entityClass): self
     {
-        if (array_key_exists($entityClass, $this->entitiesConfigurations)) {
+        if (\array_key_exists($entityClass, $this->entitiesConfigurations)) {
             unset($this->entitiesConfigurations[$entityClass]);
         }
+
         return $this;
     }
 
@@ -51,7 +53,7 @@ class Configuration
         if (isset($config['default'])) {
             $configuration->setDefaultConfiguration(EntityConfiguration::createFromArray($config['default']));
         }
-        if (isset($config['entity']) && is_array($config['entity'])) {
+        if (isset($config['entity']) && \is_array($config['entity'])) {
             foreach ($config['entity'] as $entityClass => $entityConfig) {
                 $configuration->addEntityConfiguration(
                     $entityClass,
@@ -59,6 +61,7 @@ class Configuration
                 );
             }
         }
+
         return $configuration;
     }
 

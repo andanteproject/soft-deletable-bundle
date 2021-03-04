@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Andante\SoftDeletableBundle\Tests\Fixtures\Entity;
 
 use Andante\SoftDeletableBundle\SoftDeletable\SoftDeletableInterface;
-use Andante\SoftDeletableBundle\SoftDeletable\SoftDeletableTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,12 +17,12 @@ class Address implements SoftDeletableInterface
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private ?int $id  = null;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    private ?string $name  = null;
+    private ?string $name = null;
 
     private ?\DateTimeImmutable $deleted = null;
 
@@ -50,6 +49,7 @@ class Address implements SoftDeletableInterface
     public function setName(?string $name): self
     {
         $this->name = $name;
+
         return $this;
     }
 }
