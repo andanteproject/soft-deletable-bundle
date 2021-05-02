@@ -7,11 +7,11 @@ namespace Andante\SoftDeletableBundle\EventSubscriber;
 use Andante\SoftDeletableBundle\Config\Configuration;
 use Andante\SoftDeletableBundle\Doctrine\DBAL\Type\DeletedAtType;
 use Andante\SoftDeletableBundle\SoftDeletable\SoftDeletableInterface;
+use Doctrine\Bundle\DoctrineBundle\EventSubscriber\EventSubscriberInterface;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Events;
-use Doctrine\Bundle\DoctrineBundle\EventSubscriber\EventSubscriberInterface;
 
 class SoftDeletableEventSubscriber implements EventSubscriber, EventSubscriberInterface
 {

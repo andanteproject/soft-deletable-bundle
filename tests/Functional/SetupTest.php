@@ -21,11 +21,12 @@ class SetupTest extends KernelTestCase
         self::bootKernel();
     }
 
-    protected static function createKernel(array $options = []) : AndanteSoftDeletableKernel
+    protected static function createKernel(array $options = []): AndanteSoftDeletableKernel
     {
         /** @var AndanteSoftDeletableKernel $kernel */
         $kernel = parent::createKernel($options);
         $kernel->addConfig('/config/basic.yaml');
+
         return $kernel;
     }
 
