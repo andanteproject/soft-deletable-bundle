@@ -11,8 +11,9 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Events;
+use Doctrine\Bundle\DoctrineBundle\EventSubscriber\EventSubscriberInterface;
 
-class SoftDeletableEventSubscriber implements EventSubscriber
+class SoftDeletableEventSubscriber implements EventSubscriber, EventSubscriberInterface
 {
     private Configuration $configuration;
 
