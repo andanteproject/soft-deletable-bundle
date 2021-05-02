@@ -7,6 +7,7 @@ namespace Andante\SoftDeletableBundle\Tests\Functional;
 use Andante\SoftDeletableBundle\DependencyInjection\Compiler\DoctrineEventSubscriberPass;
 use Andante\SoftDeletableBundle\Doctrine\DBAL\Type\DeletedAtType;
 use Andante\SoftDeletableBundle\Doctrine\Filter\SoftDeletableFilter;
+use Andante\SoftDeletableBundle\EventSubscriber\SoftDeletableEventSubscriber;
 use Andante\SoftDeletableBundle\Tests\HttpKernel\AndanteSoftDeletableKernel;
 use Andante\SoftDeletableBundle\Tests\KernelTestCase;
 use Doctrine\DBAL\Types\Type;

@@ -90,8 +90,12 @@ class SoftDeleteTest extends KernelTestCase
         $em->remove($organization1);
         $em->flush();
         \sleep(1); //Giving time to mysqlite to update file
-        self::assertNotSame($address1->getDeletedAt()->format(\DateTimeInterface::ATOM), $address1DeletedAt->format(\DateTimeInterface::ATOM));
-        self::assertSame($organization1->getDeletedAt()->format(\DateTimeInterface::ATOM), $organization1DeletedAt->format(\DateTimeInterface::ATOM));
+        $dateTimeImmutable1 = $address1->getDeletedAt();
+        $dateTimeImmutable2 = $organization1->getDeletedAt();
+        self::assertNotNull($dateTimeImmutable1);
+        self::assertNotNull($dateTimeImmutable2);
+        self::assertNotSame($dateTimeImmutable1->format(\DateTimeInterface::ATOM), $address1DeletedAt->format(\DateTimeInterface::ATOM));
+        self::assertSame($dateTimeImmutable2->format(\DateTimeInterface::ATOM), $organization1DeletedAt->format(\DateTimeInterface::ATOM));
 
         $em->getFilters()->enable(SoftDeletableFilter::NAME);
         $addresses = $addressRepository->findAll();
