@@ -7,7 +7,6 @@ namespace Andante\SoftDeletableBundle\Tests\Functional;
 use Andante\SoftDeletableBundle\DependencyInjection\Compiler\DoctrineEventSubscriberPass;
 use Andante\SoftDeletableBundle\Doctrine\DBAL\Type\DeletedAtType;
 use Andante\SoftDeletableBundle\Doctrine\Filter\SoftDeletableFilter;
-use Andante\SoftDeletableBundle\EventSubscriber\SoftDeletableEventSubscriber;
 use Andante\SoftDeletableBundle\Tests\HttpKernel\AndanteSoftDeletableKernel;
 use Andante\SoftDeletableBundle\Tests\KernelTestCase;
 use Doctrine\DBAL\Types\Type;
@@ -22,12 +21,11 @@ class SetupTest extends KernelTestCase
         self::bootKernel();
     }
 
-    protected static function createKernel(array $options = []): AndanteSoftDeletableKernel
+    protected static function createKernel(array $options = []) : AndanteSoftDeletableKernel
     {
         /** @var AndanteSoftDeletableKernel $kernel */
         $kernel = parent::createKernel($options);
         $kernel->addConfig('/config/basic.yaml');
-
         return $kernel;
     }
 
@@ -67,7 +65,14 @@ class SetupTest extends KernelTestCase
                 bool $carry,
                 $service
             ) => $carry ? $carry : $service instanceof SoftDeletableEventSubscriber, false);
-            self::assertTrue($serviceIdRegistered || $serviceRegistered);
+            /** @var array<object> $listeners */
+            $listeners = $evm->getListeners()['loadClassMetadata'] ?? [];
+            $listenerRegistered = \array_reduce($listeners, static fn (
+                bool $carry,
+                $service
+            ) => $carry ? $carry : $service instanceof SoftDeletableEventSubscriber, false);
+
+            self::assertTrue($serviceIdRegistered || $serviceRegistered || $listenerRegistered);
         }
     }
 }
