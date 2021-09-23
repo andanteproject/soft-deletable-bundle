@@ -10,7 +10,6 @@ use Andante\SoftDeletableBundle\SoftDeletable\SoftDeletableInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Query\Filter\SQLFilter;
-use phpDocumentor\Reflection\Types\ClassString;
 
 class SoftDeletableFilter extends SQLFilter
 {
@@ -23,6 +22,7 @@ class SoftDeletableFilter extends SQLFilter
 
     /**
      * @param ClassMetadata<object> $targetEntity
+     * @param string                $targetTableAlias
      */
     public function addFilterConstraint(ClassMetadata $targetEntity, $targetTableAlias): string
     {
