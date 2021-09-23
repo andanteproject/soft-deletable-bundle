@@ -25,7 +25,7 @@ class KernelTestCase extends \Symfony\Bundle\FrameworkBundle\Test\KernelTestCase
         $ems = $manager->getManagers();
         /** @var EntityManagerInterface $em */
         $em = \reset($ems);
-        /** @var array<int, ClassMetadata> $metadatas */
+        /** @var array<int, ClassMetadata<object>> $metadatas */
         $metadatas = $em->getMetadataFactory()->getAllMetadata();
         $schemaTool = new SchemaTool($em);
         $schemaTool->dropSchema($metadatas);

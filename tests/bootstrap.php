@@ -2,10 +2,7 @@
 
 declare(strict_types=1);
 
-use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
-use Doctrine\Common\Annotations\CachedReader;
-use Doctrine\Common\Cache\ArrayCache;
 
 \define('TESTS_PATH', __DIR__);
 \define('VENDOR_PATH', \dirname(__DIR__).'/vendor');

@@ -40,7 +40,7 @@ class MappingTest extends KernelTestCase
         self::assertArrayHasKey('indexes', $classMetadata->table);
         self::assertCount(1, $classMetadata->table['indexes']);
 
-        /** @var ClassMetadata $classMetadata */
+        /** @var ClassMetadata<object> $classMetadata */
         $classMetadata = $em->getClassMetadata(Address::class);
         self::assertArrayHasKey('deleted', $classMetadata->fieldMappings);
         self::assertSame('delete_date', $classMetadata->getColumnName('deleted'));
