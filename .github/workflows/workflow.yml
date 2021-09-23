@@ -2,94 +2,62 @@ name: soft-deletable-bundle-CI
 on:
   [push, pull_request]
 jobs:
-  build-php-7-4:
+  phpstan:
     runs-on: ubuntu-latest
+    name: PHPStan
     steps:
-      - uses: shivammathur/setup-php@v2
-        with:
-          php-version: '7.4'
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: composer install
         run: composer install
-#      too slow
-#      - uses: actions/upload-artifact@v2
-#        with:
-#          name: build-php-7-4
-#          path: ${{ github.workspace }}
-#          retention-days: 1
-
-  build-php-8:
+      - name: PHPStan
+        run: composer phpstan
+        env:
+          REQUIRE_DEV: true
+  cs-fixer:
     runs-on: ubuntu-latest
+    name: PHP-CS-Fixer
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: composer install
         run: composer install
-
-  check-code-php-7-4:
-    runs-on: ubuntu-latest
-    needs: [ build-php-7-4 ]
-    steps:
-      - uses: shivammathur/setup-php@v2
-        with:
-          php-version: '7.4'
-      - uses: actions/checkout@v2
-      - name: composer install
-        run: composer install
-
-      - name: cs-check
+      - name: CS Check
         run: composer cs-check
 
-      - name: phpstan
-        run: composer phpstan
-
-  check-code-php-8:
+  tests:
     runs-on: ubuntu-latest
-    needs: [ build-php-8 ]
+    strategy:
+      matrix:
+        name:
+          - 'PHP 7.4 tests (Symfony 4.4)'
+          - 'PHP 7.4 tests (Symfony 5.1)'
+          - 'PHP 8.0 tests (Symfony 5.2)'
+          - 'PHP 8.0 tests (Symfony 5.3)'
+        include:
+          - php: '7.4'
+            symfony: 4.4.*
+          - php: '7.4'
+            symfony: 5.1.*
+          - php: '8.0'
+            symfony: 5.2.*
+          - php: '8.0'
+            symfony: 5.3.*
+    name: ${{ matrix.name }}
     steps:
-      - uses: actions/checkout@v2
-      - name: composer install
-        run: composer install
-
-      - name: cs-check
-        run: composer cs-check
-
-      - name: phpstan
-        run: composer phpstan
-
-  tests-php-7-4:
-    runs-on: ubuntu-latest
-    needs: [ build-php-7-4 ]
-    steps:
-      - uses: shivammathur/setup-php@v2
-        with:
-          php-version: '7.4'
-      - uses: actions/checkout@v2
-
-      - name: composer install
-        run: composer install
-
-      - name: setting mysql
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup MySQL
         run: |
           sudo systemctl enable mysql.service
           sudo systemctl start mysql.service
           mysql -uroot -proot -h localhost -e "CREATE DATABASE test CHARACTER SET utf8 COLLATE utf8_general_ci;"
-
-      - name: phpunit
-        run: composer phpunit
-
-  tests-php-8:
-    runs-on: ubuntu-latest
-    needs: [ build-php-8 ]
-    steps:
-      - uses: actions/checkout@v2
-      - name: composer install
-        run: composer install
-
-      - name: setting mysql
-        run: |
-          sudo systemctl enable mysql.service
-          sudo systemctl start mysql.service
-          mysql -uroot -proot -h localhost -e "CREATE DATABASE test CHARACTER SET utf8 COLLATE utf8_general_ci;"
-
-      - name: phpunit
-        run: composer phpunit
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+      - run: |
+          sed -ri 's/"symfony\/(.+)": "(.+)"/"symfony\/\1": "${{ matrix.symfony }}"/' composer.json;
+        if: matrix.symfony
+      - run: composer update --no-interaction --no-progress --ansi
+      - run: composer phpunit

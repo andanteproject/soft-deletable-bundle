@@ -13,7 +13,3 @@ use Doctrine\Common\Cache\ArrayCache;
 AnnotationRegistry::registerFile(
     __DIR__.'/../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php'
 );
-
-$reader = new AnnotationReader();
-$reader = new CachedReader($reader, new ArrayCache());
-$_ENV['annotation_reader'] = $reader;
