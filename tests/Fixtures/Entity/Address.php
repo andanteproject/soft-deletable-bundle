@@ -36,7 +36,7 @@ class Address implements SoftDeletableInterface
         return $this->deleted;
     }
 
-    public function setDeletedAt(\DateTimeImmutable $deletedAt = null): void
+    public function setDeletedAt(?\DateTimeImmutable $deletedAt = null): void
     {
         $this->deleted = $deletedAt ?? new \DateTimeImmutable();
     }
