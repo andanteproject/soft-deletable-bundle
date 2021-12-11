@@ -43,6 +43,10 @@ jobs:
             symfony: 5.2.*
           - php: '8.0'
             symfony: 5.3.*
+          - php: '8.0'
+            symfony: 5.4.*
+          - php: '8.0'
+            symfony: 6.0.*
     name: ${{ matrix.name }}
     steps:
       - name: Checkout

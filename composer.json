@@ -29,7 +29,7 @@
     ],
     "require": {
         "php": "^7.4 || ^8.0",
-        "symfony/framework-bundle": "^4.4 | ^5.0",
+        "symfony/framework-bundle": "^4.4 | ^5.0 | ^6.0",
         "doctrine/common": "^2.13 || ^3.0",
         "doctrine/event-manager": "^1.0"
     },
@@ -38,7 +38,7 @@
         "doctrine/orm": "^2.6.3",
         "phpunit/phpunit": "^9.5",
         "doctrine/doctrine-bundle": "^2.2",
-        "symfony/yaml": "^5.2",
+        "symfony/yaml": "^5.2 | ^6.0",
         "friendsofphp/php-cs-fixer": "^2.18",
         "phpstan/phpstan": "^0.12.78",
         "phpstan/phpstan-phpunit": "^0.12.17",
