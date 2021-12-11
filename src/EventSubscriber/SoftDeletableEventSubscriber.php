@@ -80,10 +80,6 @@ class SoftDeletableEventSubscriber implements EventSubscriber, EventSubscriberIn
         ]);
 
         if ($this->configuration->isTableIndexForClass($className)) {
-            // Add an index to table
-            if (!isset($classMetadata->table['indexes'])) {
-                $classMetadata->table['indexes'] = [];
-            }
             $classMetadata->table['indexes'][] =
                 [
                     'columns' => [$classMetadata->getColumnName($deleteAtPropertyName)],

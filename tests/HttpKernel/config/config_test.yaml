@@ -9,6 +9,9 @@ services:
 
   Symfony\Component\Security\Core\Security: null
 
+framework:
+  test: false
+
 doctrine:
   dbal:
     url: "%env(DATABASE_URL)%"

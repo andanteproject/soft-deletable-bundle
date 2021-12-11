@@ -30,7 +30,7 @@ class DeletedDateAwareOnTest extends KernelTestCase
     {
         $this->createSchema();
         /** @var EntityManagerInterface $em */
-        $em = self::$container->get('doctrine.orm.default_entity_manager');
+        $em = self::getContainer()->get('doctrine.orm.default_entity_manager');
         $organizationRepository = $em->getRepository(Organization::class);
         $organization = new Organization();
         $em->persist($organization);

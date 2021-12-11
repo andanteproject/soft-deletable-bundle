@@ -34,7 +34,7 @@ class SetupTest extends KernelTestCase
     public function testFilterSetup(): void
     {
         /** @var ManagerRegistry $managerRegistry */
-        $managerRegistry = self::$container->get('doctrine');
+        $managerRegistry = self::getContainer()->get('doctrine');
         /** @var EntityManagerInterface $em */
         foreach ($managerRegistry->getManagers() as $em) {
             self::assertTrue($em->getFilters()->has(SoftDeletableFilter::NAME));
@@ -51,7 +51,7 @@ class SetupTest extends KernelTestCase
     public function testSubscriberSetup(): void
     {
         /** @var ManagerRegistry $managerRegistry */
-        $managerRegistry = self::$container->get('doctrine');
+        $managerRegistry = self::getContainer()->get('doctrine');
         /** @var EntityManagerInterface $em */
         foreach ($managerRegistry->getManagers() as $em) {
             $evm = $em->getEventManager();

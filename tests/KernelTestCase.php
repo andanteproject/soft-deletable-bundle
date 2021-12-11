@@ -20,7 +20,7 @@ class KernelTestCase extends \Symfony\Bundle\FrameworkBundle\Test\KernelTestCase
     protected function createSchema(): void
     {
         /** @var ManagerRegistry $manager */
-        $manager = self::$container->get('doctrine');
+        $manager = self::getContainer()->get('doctrine');
         /** @var EntityManagerInterface[] $ems */
         $ems = $manager->getManagers();
         /** @var EntityManagerInterface $em */

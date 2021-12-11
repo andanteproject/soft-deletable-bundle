@@ -34,6 +34,8 @@ jobs:
           - 'PHP 7.4 tests (Symfony 5.1)'
           - 'PHP 8.0 tests (Symfony 5.2)'
           - 'PHP 8.0 tests (Symfony 5.3)'
+          - 'PHP 8.0 tests (Symfony 5.4)'
+          - 'PHP 8.0 tests (Symfony 6.0)'
         include:
           - php: '7.4'
             symfony: 4.4.*

@@ -32,7 +32,7 @@ class MappingTest extends KernelTestCase
     public function testMapping(): void
     {
         /** @var EntityManagerInterface $em */
-        $em = self::$container->get('doctrine.orm.default_entity_manager');
+        $em = self::getContainer()->get('doctrine.orm.default_entity_manager');
         $classMetadata = $em->getClassMetadata(Organization::class);
         self::assertArrayHasKey('deletedAt', $classMetadata->fieldMappings);
         self::assertSame('deleted_at', $classMetadata->getColumnName('deletedAt'));
