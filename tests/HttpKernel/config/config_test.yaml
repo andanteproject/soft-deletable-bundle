@@ -10,7 +10,7 @@ services:
   Symfony\Component\Security\Core\Security: null
 
 framework:
-  test: false
+  test: true
 
 doctrine:
   dbal:
