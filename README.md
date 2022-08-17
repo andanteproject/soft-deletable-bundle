@@ -191,12 +191,12 @@ $softDeletableFilter->enableForEntity(Article::class);
 ## Configuration (completely optional)
 This bundle is build thinking how to save you time and follow best practices as close as possible.
 
-This means you can even ignore to have a `andante_soft_deletable.yml` config file in your application.
+This means you can even ignore to have a `andante_soft_deletable.yaml` config file in your application.
 
 However, for whatever reason (legacy code?), use the bundle configuration to change most of the behaviors as your needs.
 ```yaml
 andante_soft_deletable:
-  deleted_date_aware: true # default: false
+  deleted_date_aware: true # default: true
                            # Set the filter to also check deleted date value.
                            # If set true, Future date will still be avaiable 
   default:
@@ -204,7 +204,7 @@ andante_soft_deletable:
                              # The property to be used by default as deletedAt date 
                              # inside entities implementing SoftDeletableInterface
     
-    column_name: delete_at # default: null
+    column_name: deleted_at # default: null
                            # Column name to be used on database. 
                            # If set to NULL will use your default doctrine naming strategy
     table_index: false # default: true
