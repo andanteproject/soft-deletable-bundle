@@ -8,8 +8,7 @@
         "doctrine-orm",
         "soft-delete",
         "php",
-        "php7",
-        "php74"
+        "php8"
     ],
     "type": "symfony-bundle",
     "license": "MIT",
@@ -28,8 +27,8 @@
         }
     ],
     "require": {
-        "php": "^7.4 || ^8.0",
-        "symfony/framework-bundle": "^4.4 | ^5.0 | ^6.0",
+        "php": "^8.2",
+        "symfony/framework-bundle": "^5.0 | ^6.0 | ^7.0",
         "doctrine/common": "^2.13 || ^3.0",
         "doctrine/event-manager": "^1.0"
     },
@@ -39,7 +38,7 @@
         "doctrine/orm": "^2.6.3",
         "phpunit/phpunit": "^9.5",
         "doctrine/doctrine-bundle": "^2.2",
-        "symfony/yaml": "^4.0 | ^5.0 | ^6.0",
+        "symfony/yaml": "^4.0 | ^5.0 | ^6.0 | ^7.0",
         "phpstan/phpstan": "^1.2",
         "phpstan/phpstan-phpunit": "^1.0",
         "phpstan/extension-installer": "^1.1",
